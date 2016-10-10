@@ -162,7 +162,7 @@ public class AppActionDialogBuilder extends AlertDialog.Builder {
 
             if (Build.VERSION.SDK_INT < 16) {
                 notification = new Notification();
-                notification.icon = R.drawable.ic_launcher;
+                notification.icon = R.drawable.icon_launcher;
                 try {
                     Method deprecatedMethod = notification.getClass()
                                                           .getMethod("setLatestEventInfo",
@@ -178,7 +178,7 @@ public class AppActionDialogBuilder extends AlertDialog.Builder {
             } else {
                 // Use new API
                 Notification.Builder builder = new Notification.Builder(context).setContentIntent(intent)
-                                                                                .setSmallIcon(R.drawable.ic_launcher)
+                                                                                .setSmallIcon(R.drawable.icon_launcher)
                                                                                 .setContentTitle(title);
                 notification = builder.build();
             }

@@ -9,6 +9,7 @@ import android.content.pm.ResolveInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.InputFilter;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -57,11 +58,11 @@ public class SearchActivity extends Activity implements App.PackageChangedListen
 
         super.onCreate(savedInstanceState);
 
-        requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         setContentView(R.layout.activity_search);
 
-        getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.main_title);
+        //getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.main_title);
 
         appInfoListStore = new AppInfoListStore(this);
 
@@ -79,6 +80,8 @@ public class SearchActivity extends Activity implements App.PackageChangedListen
         searchQueryEditText.setImeOptions(EditorInfo.IME_ACTION_DONE | EditorInfo.IME_FLAG_NO_EXTRACT_UI);
         searchQueryEditText.setImeActionLabel("Launch", EditorInfo.IME_ACTION_DONE);
 
+        searchQueryEditText.setFilters(new InputFilter[] {new InputFilter.AllCaps()});
+
         searchQueryEditText.setOnEditorActionListener(new OnEditorActionListener() {
 
             @Override
@@ -91,17 +94,21 @@ public class SearchActivity extends Activity implements App.PackageChangedListen
             }
 
         });
-        searchQueryEditText.setHint(R.string.query_hint);
 
         searchQueryEditText.addTextChangedListener(new SimpleTextWatcher() {
 
             @Override
             public void afterTextChanged(Editable s) {
                 final String editString = s.toString();
-                final boolean was_adding = oldSearch.length() < editString.length();
-                oldSearch = editString.toLowerCase(Locale.ENGLISH);
-                adapter.setActQuery(editString.toLowerCase(Locale.ENGLISH));
-                startAppWhenItItIsTheOnlyOneInList(was_adding);
+                if (editString.equals("###")) {
+                        startActivity(new Intent(SearchActivity.this, FASTSettingsActivity.class));
+                        finish();
+                } else {
+                    final boolean was_adding = oldSearch.length() < editString.length();
+                    oldSearch = editString.toLowerCase(Locale.ENGLISH);
+                    adapter.setActQuery(editString.toLowerCase(Locale.ENGLISH));
+                    startAppWhenItItIsTheOnlyOneInList(was_adding);
+                }
             }
 
         });

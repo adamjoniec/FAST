@@ -1,6 +1,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="@dimen/actionbar_height"
+
+    android:layout_height="match_parent"
+    android:visibility="visible"
     android:orientation="vertical">
 
     <LinearLayout
@@ -11,7 +13,8 @@
         android:paddingLeft="@dimen/padding_medium"
         android:paddingRight="@dimen/padding_medium">
 
-        <ImageView style="@style/actionbar_icon" />
+        <ImageView style="@style/actionbar_icon"
+            android:visibility="gone"/>
 
         <EditText
             android:layout_width="0dp"
@@ -22,6 +25,8 @@
             android:background="@drawable/edittext_bg"
             android:hint="@string/query_hint"
             android:paddingLeft="@dimen/padding_large"
+            android:gravity="center"
+            android:cursorVisible="false"
             android:inputType="textNoSuggestions"
             android:textColor="?android:textColor" />
 
@@ -33,6 +38,7 @@
             android:clickable="true"
             android:focusable="true"
             android:padding="@dimen/actionbar_icon_padding"
+            android:visibility="gone"
             android:onClick="settingsClicked" />
 
     </LinearLayout>
